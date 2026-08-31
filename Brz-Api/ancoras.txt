@@ -1,0 +1,106 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#  ancoras.txt — os dois enderecos globais de onde a reflexao parte.
+#
+#  BRZ Api — ver ../LICENSE.
+#
+#  Formato: <nome>  <RVA em hexadecimal>, uma por linha. '#' comenta.
+#  RVA = deslocamento a partir da base do modulo, NAO endereco absoluto: a
+#  base muda a cada execucao (ASLR) e e' perguntada ao sistema.
+#
+#  TROCAR DE BUILD E TROCAR ESTE ARQUIVO. Nada aqui esta cravado no binario
+#  da API, e e' esse o ponto: uma atualizacao do jogo nao deve obrigar a
+#  recompilar a API nem os plugins.
+#
+#  E ELES SAO VERIFICADOS ANTES DE VALEREM. Um numero de arquivo e hipotese,
+#  nunca fato. Se as provas de BrzReflexao.cpp nao passarem, Pronta() devolve
+#  0 e NENHUM plugin sobe — melhor nao carregar que ler memoria errada calado.
+#
+#  build do jogo: 25002750
+#  sha256 do exe: 9e8c8a57fb82b02b101dd211b6cc855a...
+#  medidos em:    31/08/2026
+# ═══════════════════════════════════════════════════════════════════════════
+
+GUObjectArray   B1A8BF0
+NamePool        B0BC740
+
+# UObject::ProcessEvent — por onde passa TODA chamada de UFunction. E' o unico
+# desvio que a BRZ Api precisa para entregar hook por nome: em vez de desviar
+# cada funcao, desvia-se o despachante e compara-se o FName.
+#
+# Varias classes sobrescrevem ProcessEvent (AActor, AShooterCharacter,
+# UPrimalInventoryComponent...), mas todas acabam chamando esta. Desviar aqui
+# pega tudo, e desviar UMA funcao em vez de milhares e o que torna o custo
+# aceitavel.
+ProcessEvent    13C68C0
+
+# O alocador do JOGO. Uma FString entregue ao jogo tem de ter a memoria dele:
+# se ele liberar memoria que NOS alocamos, o heap dele corrompe e a queda vem
+# depois, em lugar nenhum. Sem estas duas, as funcoes que criam texto RECUSAM,
+# de proposito — recusar e melhor que alocar do lado errado.
+FMemoryMalloc   107D8B0
+FMemoryFree     1070810
+
+# ── ancoras NOMEADAS, para o que a reflexao NAO descreve ────────────────────
+#
+# A reflexao descreve UFunction e UProperty. Ela NAO descreve virtual nativa
+# comum — e algumas importam. `APrimalStructure::TakeDamage` nao tem `exec`,
+# logo nao e UFunction, logo nao aparece na reflexao: um plugin de PvE que
+# precisa CANCELAR dano numa estrutura nao tem outro caminho.
+#
+# Um plugin pede pelo nome (api->EnderecoDaAncora) e desvia com HookFuncao.
+#
+# ISTO NAO E A TABELA DE OFFSETS QUE DEIXAMOS PARA TRAS, e a diferenca e o
+# ponto inteiro:
+#   · aquela tinha 555.540 entradas e era BAIXADA de um servico que nao
+#     controlamos. Nao publicada para a build nova, nada funcionava.
+#   · esta tem meia duzia de linhas, vem junto com a API, e so' e' precisa
+#     pelos poucos plugins que desviam virtual nativa. Todo o resto — toda
+#     UFunction, todo campo, toda classe — vem da reflexao viva.
+#
+# Faltar uma ancora e um plugin que nao faz UMA coisa. Nao e um servidor que
+# nao sobe.
+
+DanoNoPersonagem      4BF4D80    # APrimalCharacter::TakeDamage
+DanoNoDino            5359420    # APrimalDinoCharacter::TakeDamage
+DanoNaEstrutura       53E4750    # APrimalStructure::TakeDamage
+MorteDoDino           52F1BD0    # APrimalDinoCharacter::Die  (tambem e UFunction)
+MorteDoJogador        4CC6DE0    # AShooterCharacter::Die     (NAO e UFunction)
+MorteDoPersonagem     4BB7630    # APrimalCharacter::Die      (NAO e UFunction)
+
+# APlayerController::GetPlayerNetworkAddress — o endereco de rede do jogador.
+# Nao tem `exec`, logo nao e UFunction, logo a reflexao nao a descreve.
+#
+# Devolve FString POR VALOR: no x64 da Microsoft isso vira um parametro
+# escondido — `this` em RCX, o lugar do resultado em RDX. E a memoria da string
+# e do JOGO; quem libera e' o FMemoryFree acima.
+#
+# Medida por ferramentas/medir-ancora.py (assinatura de 48 bytes a partir do
+# byte 64 da funcao, com o tamanho da funcao conferindo). NAO foi conferida
+# dentro do jogo rodando — ate isso acontecer, e' um numero medido, nao um fato
+# observado. A guarda de "aponta para codigo executavel" vale de qualquer jeito.
+EnderecoDeRede        36959E0    # APlayerController::GetPlayerNetworkAddress
+
+# ── o RCON ─────────────────────────────────────────────────────────────────
+#
+# O RCON NAO passa por ProcessEvent: e um servidor de soquete nativo. O pacote
+# chega em RCONClientConnection::ProcessRCONPacket, e a resposta sai por
+# RCONClientConnection::SendMessage(Id, Tipo, FString).
+#
+# Sem estas duas, comando de RCON de plugin fica registrado e NAO responde —
+# e o log diz isso. O servidor sobe igual.
+#
+# O layout do pacote (Length 0x0 · Id 0x4 · Type 0x8 · Body 0x10) veio da build
+# de referencia, e por isso e CONFERIDO no primeiro pacote antes de valer: tipo
+# do protocolo e corpo imprimivel. Nao conferindo, o despacho se desliga.
+TratadorRcon          5374F90    # RCONClientConnection::ProcessRCONPacket
+RespostaRcon          5375150    # RCONClientConnection::SendMessage
+
+# FText::FromString(const FString&) — quem MONTA o FText e' a engine.
+#
+# FText guarda referencia compartilhada para dados de texto que a engine possui.
+# Montar os campos a mao exige adivinhar o layout, e FText errado nao falha na
+# fronteira: falha dentro do jogo, num lugar que nao aponta de volta.
+#
+# Estatica que devolve struct grande: no x64 da Microsoft, o lugar do resultado
+# vai em RCX e o argumento em RDX.
+TextoDeString         10AE710    # FText::FromString(FString&)

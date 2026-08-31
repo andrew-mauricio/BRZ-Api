@@ -9,11 +9,12 @@ verdade. As demais **devolvem falha e dizem no log qual sao e qual plugin**
 **pediu** — nunca fingem sucesso, porque motor que devolve zero em silencio
 faz o plugin agir sobre dado inventado.
 
-## 87 de 89 (97%)
+## 104 de 104 (100%)
 
-- **85 ligadas** — fazem o trabalho, sem ressalva
-- **2 parciais** — entregam parte, e o log diz exatamente o que falta (marcadas com `BRZ_PARCIAL` no fonte)
-- **2 nao ligadas** — recusam sempre, e dizem por que
+- **100 ligadas** — fazem o trabalho, sem ressalva
+- **3 parciais** — entregam parte, e o log diz exatamente o que falta (marcadas com `BRZ_PARCIAL` no fonte)
+- **1 substituidas** — recusam DE PROPOSITO, porque nao ha rota por reflexao, e apontam a funcao que faz o servico
+- **0 nao ligadas** — recusam sempre, e dizem por que
 
 ### Ligadas
 
@@ -26,7 +27,10 @@ faz o plugin agir sobre dado inventado.
 - `AcharServico`
 - `AdicionarComandoChat`
 - `AdicionarComandoConsole`
+- `AdicionarComandoRcon`
 - `Agendar`
+- `AoEntrarJogador`
+- `AoSairJogador`
 - `AoTick`
 - `AoTimer`
 - `AtoresNoRaio`
@@ -37,14 +41,18 @@ faz o plugin agir sobre dado inventado.
 - `CaminhoDados`
 - `CaminhoRaiz`
 - `CancelarAgendamento`
+- `ChamarFuncao`
+- `ChamarFuncaoEstatica`
 - `ChamarVirtual`
 - `ContarItemNoInventario`
 - `DadosDoJogo`
+- `DarItemAoJogador`
 - `DefinirRetorno`
 - `DescendeDe`
 - `DinoMontado`
 - `EOSIDdoJogador`
 - `EhReplicado`
+- `EnderecoDaAncora`
 - `EscreverBit`
 - `EscreverMembro`
 - `EscreverParm`
@@ -58,6 +66,9 @@ faz o plugin agir sobre dado inventado.
 - `HookVirtual`
 - `IdDaTribo`
 - `IdDoJogador`
+- `InventarioDoJogador`
+- `InventarioDoObjeto`
+- `ItensDoInventario`
 - `JogadorEstaMorto`
 - `JogadoresConectados`
 - `Legivel`
@@ -72,6 +83,7 @@ faz o plugin agir sobre dado inventado.
 - `MensagemDeServidor`
 - `MensagemDeServidorParaTodos`
 - `ModoDeJogo`
+- `MoverItem`
 - `Mundo`
 - `NascerDino`
 - `NascerDrop`
@@ -91,12 +103,16 @@ faz o plugin agir sobre dado inventado.
 - `PosicaoParaCoordenadas`
 - `Pronta`
 - `PublicarServico`
+- `QuantidadeDoItem`
+- `RemoverAoEntrarJogador`
+- `RemoverAoSairJogador`
 - `RemoverAoTick`
 - `RemoverAoTimer`
 - `RemoverComandoChat`
 - `RemoverComandoConsole`
 - `RemoverComandoRcon`
 - `RemoverHook`
+- `RemoverItem`
 - `RodarComando`
 - `StatusDoServidor`
 - `TeleportarParaJogador`
@@ -105,11 +121,14 @@ faz o plugin agir sobre dado inventado.
 
 ### Parciais
 
-- `AdicionarComandoRcon`
 - `CriarTextoDoJogo`
+- `CriarTextoRicoDoJogo`
+- `EnderecoIP`
+
+### Substituidas (recusam de proposito)
+
+- `DarItem` -> use `DarItemAoJogador`
 
 ### Ainda nao ligadas
 
-- `CriarTextoRicoDoJogo`
-- `EnderecoIP`
 

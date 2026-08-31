@@ -16,10 +16,20 @@ No PDB. No offset table. No third-party CDN. It asks the running game.
 
 1. Put **`winmm.dll`** next to `ArkAscendedServer.exe`, in
    `ShooterGame\Binaries\Win64\`.
-2. Rename the **original** `winmm.dll` of that folder to **`winmm_orig.dll`**.
+2. Copy the **`Brz-Api\`** folder from this package next to it too. It carries
+   `ancoras.txt` — thirteen addresses, and the only file that is specific to a
+   game build. **Without it the API loads, refuses to initialise, and no plugin
+   runs** — on purpose: reading the wrong memory quietly is worse than not
+   loading.
+3. Rename the **original** `winmm.dll` of that folder to **`winmm_orig.dll`**.
    (On Windows there is none there — copy it from `C:\Windows\System32\`.)
-3. Start the server. A `Brz-Api\` folder appears next to the executable, with
-   `Logs\BrzApi.log` and an empty `Plugins\`.
+
+Start the server. `Brz-Api\Logs\BrzApi.log` appears, and an empty `Plugins\`.
+
+**The game updated?** Only `ancoras.txt` changes — the API does not recompile,
+and neither do your plugins. The file names the build it was measured for, and
+the API refuses to start when its own proofs fail, so a stale file cannot pass
+silently.
 
 **Running under Wine?** Wine ships its own `winmm`, so it has to be told to
 prefer ours:
@@ -109,11 +119,20 @@ rodando.
 
 1. Ponha o **`winmm.dll`** ao lado do `ArkAscendedServer.exe`, em
    `ShooterGame\Binaries\Win64\`.
-2. Renomeie a `winmm.dll` **original** daquela pasta para **`winmm_orig.dll`**.
-3. Suba o servidor. Aparece uma pasta `Brz-Api\` com `Logs\BrzApi.log` e um
-   `Plugins\` vazio.
+2. Copie a pasta **`Brz-Api\`** deste pacote para lá também. Ela traz o
+   `ancoras.txt` — treze endereços, e o único arquivo que é específico de uma
+   build do jogo. **Sem ele a API carrega, recusa iniciar e nenhum plugin
+   roda** — de propósito: ler memória errada calado é pior que não carregar.
+3. Renomeie a `winmm.dll` **original** daquela pasta para **`winmm_orig.dll`**.
+
+Suba o servidor. Aparece `Brz-Api\Logs\BrzApi.log` e um `Plugins\` vazio.
 
 **Sob Wine**, é preciso mandar preferir a nossa: `WINEDLLOVERRIDES=winmm=n,b`.
+
+**O jogo atualizou?** Só o `ancoras.txt` muda — a API não recompila, e os seus
+plugins também não. O arquivo diz para qual build foi medido, e a API se recusa
+a iniciar quando as próprias provas não passam: um arquivo velho não passa
+calado.
 
 ## A diferença que mais importa
 
