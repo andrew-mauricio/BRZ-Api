@@ -9,9 +9,9 @@ verdade. As demais **devolvem falha e dizem no log qual sao e qual plugin**
 **pediu** — nunca fingem sucesso, porque motor que devolve zero em silencio
 faz o plugin agir sobre dado inventado.
 
-## 112 de 112 (100%)
+## 124 de 124 (100%)
 
-- **107 ligadas** — fazem o trabalho, sem ressalva
+- **119 ligadas** — fazem o trabalho, sem ressalva
 - **5 parciais** — entregam parte, e o log diz exatamente o que falta (marcadas com `BRZ_PARCIAL` no fonte)
 - **0 substituidas** — recusam DE PROPOSITO, porque nao ha rota por reflexao, e apontam a funcao que faz o servico
 - **0 nao ligadas** — recusam sempre, e dizem por que
@@ -30,10 +30,12 @@ faz o plugin agir sobre dado inventado.
 - `AdicionarComandoRcon`
 - `Agendar`
 - `AoEntrarJogador`
+- `AoMensagemDeChat`
 - `AoSairJogador`
 - `AoTick`
 - `AoTimer`
 - `AtoresNoRaio`
+- `BaixarArquivo`
 - `BlueprintDaClasse`
 - `BlueprintDoItem`
 - `BlueprintDoObjeto`
@@ -42,6 +44,7 @@ faz o plugin agir sobre dado inventado.
 - `CaminhoRaiz`
 - `CancelarAgendamento`
 - `ChamarFuncao`
+- `ChamarFuncaoComRetorno`
 - `ChamarFuncaoEstatica`
 - `ChamarVirtual`
 - `ContarItemNoInventario`
@@ -105,6 +108,7 @@ faz o plugin agir sobre dado inventado.
 - `ObjetoPorIndice`
 - `OffsetDoMembro`
 - `OrigemDoSimbolo`
+- `PluginCarregado`
 - `Posicao`
 - `PosicaoParaCoordenadas`
 - `Pronta`
@@ -112,6 +116,7 @@ faz o plugin agir sobre dado inventado.
 - `QuantidadeDoItem`
 - `QuantosSimbolos`
 - `RemoverAoEntrarJogador`
+- `RemoverAoMensagemDeChat`
 - `RemoverAoSairJogador`
 - `RemoverAoTick`
 - `RemoverAoTimer`
@@ -120,11 +125,18 @@ faz o plugin agir sobre dado inventado.
 - `RemoverComandoRcon`
 - `RemoverHook`
 - `RemoverItem`
+- `RequisicaoDelete`
+- `RequisicaoGet`
+- `RequisicaoGetSincrona`
+- `RequisicaoPatch`
+- `RequisicaoPost`
 - `RodarComando`
 - `StatusDoServidor`
 - `TeleportarParaJogador`
 - `TeleportarParaPosicao`
+- `TextoParaUtf16`
 - `TextoRecusa`
+- `Utf16ParaTexto`
 
 ### Parciais
 

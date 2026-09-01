@@ -16,7 +16,7 @@ que cada prova não pode afirmar**.
 | constantes de layout da engine | **28 de 28** | offsets reais do dump |
 | bytes de cada desvio | **11 de 11** | `objdump` no exe da build viva |
 | assinaturas de função desviada | **13 de 13** | as 796.225 chaves |
-| funções da tabela | **124 de 124** | o header, uma a uma |
+| funções da tabela | **138 de 138** | o header, uma a uma |
 | nomes que os plugins pedem ao jogo | **48** | o dump + os 7.006 bitfields |
 | nomes nos headers gerados | **32.103** | o dump |
 | retornos de três valores | **41 chamadas** | leitura do código |
@@ -31,7 +31,7 @@ que cada prova não pode afirmar**.
 | `MinApiVersion` x o que se chama | **24 plugins** | o mapa versão→função |
 | os números da documentação | **14 afirmações** | o artefato que produz cada um |
 
-`./ferramentas/calibrar.sh` roda tudo: **517 verdes**.
+`./ferramentas/calibrar.sh` roda tudo: **536 verdes**.
 
 **Cada guarda foi calibrada** — planta-se o defeito que ela deve pegar e exige-se
 a acusação. Uma guarda que nunca acusou nada não é uma guarda; é um enfeite.
