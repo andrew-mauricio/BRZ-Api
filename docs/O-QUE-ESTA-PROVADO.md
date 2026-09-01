@@ -31,7 +31,7 @@ que cada prova não pode afirmar**.
 | `MinApiVersion` x o que se chama | **24 plugins** | o mapa versão→função |
 | os números da documentação | **14 afirmações** | o artefato que produz cada um |
 
-`./ferramentas/calibrar.sh` roda tudo: **377 verdes**.
+`./ferramentas/calibrar.sh` roda tudo: **425 verdes**.
 
 **Cada guarda foi calibrada** — planta-se o defeito que ela deve pegar e exige-se
 a acusação. Uma guarda que nunca acusou nada não é uma guarda; é um enfeite.
