@@ -104,3 +104,36 @@ RespostaRcon          5375150    # RCONClientConnection::SendMessage
 # Estatica que devolve struct grande: no x64 da Microsoft, o lugar do resultado
 # vai em RCX e o argumento em RDX.
 TextoDeString         10AE710    # FText::FromString(FString&)
+
+# AShooterPlayerController::ConsoleCommand(FString&, bool)
+#
+# Comando de console digitado por admin DENTRO do jogo. Nao tem `exec`, logo
+# nao e UFunction, logo a reflexao nao a descreve — e foi assim que os 40
+# comandos de console dos nossos plugins ficaram sem responder na primeira
+# subida em producao, enquanto o chat (que E UFunction) armava normalmente.
+#
+# Devolve FString POR VALOR: this em RCX, lugar do resultado em RDX, a FString
+# do comando em R8 e o bool em R9.
+ComandoDeConsole      4EA7310    # AShooterPlayerController::ConsoleCommand
+
+# ── o RELOGIO, e por que ele nao pode vir do ProcessEvent ──────────────────
+#
+# UWorld::Tick roda UMA VEZ POR QUADRO, e so' existe quando ha mundo. E' de la
+# que a AsaApi puxa os tiques e os timers dos plugins dela — conferido no fonte
+# dela (HooksImpl.cpp: UWorld.Tick e AGameState.DefaultTimer).
+#
+# A BRZ Api puxava da CONTAGEM DE DESPACHOS do ProcessEvent: um "batimento" a
+# cada 256 despachos. Durante o carregamento do mundo a GameThread nao faz outra
+# coisa senao ProcessEvent — centenas de milhares de BeginPlay — entao o
+# batimento rodava no talo, dentro da propria thread que devia estar carregando
+# o mundo. E a lista "por tique" disparava toda vez que o MILISSEGUNDO mudava:
+# ate 1000 Hz, contra os ~30 Hz de um quadro.
+UWorldTick            3467940    # UWorld::Tick(ELevelTick, float)
+
+# AShooterPlayerController::ServerSendChatMessage_Implementation
+#
+# O chat por ANCORA, em vez de por UFunction. Hoje um comando de chat obriga a
+# desviar o ProcessEvent inteiro — o despachante universal, que passa em TODA
+# chamada de funcao do jogo. A AsaApi desvia esta funcao aqui, direto: uma
+# chamada que nao seja esta custa ZERO, porque nao ha despachante nenhum.
+ChatDoJogador         4EF6DF0    # AShooterPlayerController::ServerSendChatMessage_Implementation
