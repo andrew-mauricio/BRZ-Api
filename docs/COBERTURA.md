@@ -9,11 +9,11 @@ verdade. As demais **devolvem falha e dizem no log qual sao e qual plugin**
 **pediu** — nunca fingem sucesso, porque motor que devolve zero em silencio
 faz o plugin agir sobre dado inventado.
 
-## 106 de 106 (100%)
+## 112 de 112 (100%)
 
-- **102 ligadas** — fazem o trabalho, sem ressalva
-- **3 parciais** — entregam parte, e o log diz exatamente o que falta (marcadas com `BRZ_PARCIAL` no fonte)
-- **1 substituidas** — recusam DE PROPOSITO, porque nao ha rota por reflexao, e apontam a funcao que faz o servico
+- **107 ligadas** — fazem o trabalho, sem ressalva
+- **5 parciais** — entregam parte, e o log diz exatamente o que falta (marcadas com `BRZ_PARCIAL` no fonte)
+- **0 substituidas** — recusam DE PROPOSITO, porque nao ha rota por reflexao, e apontam a funcao que faz o servico
 - **0 nao ligadas** — recusam sempre, e dizem por que
 
 ### Ligadas
@@ -50,10 +50,13 @@ faz o plugin agir sobre dado inventado.
 - `DefinirRetorno`
 - `DescendeDe`
 - `DinoMontado`
+- `EOSIDDoAtacante`
+- `EOSIDPorIdDoJogador`
 - `EOSIDdoJogador`
 - `EhReplicado`
 - `EnderecoDaAncora`
 - `EnderecoDoSimbolo`
+- `EnderecoDoSimboloInferido`
 - `EscreverBit`
 - `EscreverMembro`
 - `EscreverParm`
@@ -79,6 +82,7 @@ faz o plugin agir sobre dado inventado.
 - `LerRetorno`
 - `LerTextoDoJogo`
 - `Log`
+- `MascaraDoBit`
 - `MensagemDeChat`
 - `MensagemDeChatParaTodos`
 - `MensagemDeServidor`
@@ -100,6 +104,7 @@ faz o plugin agir sobre dado inventado.
 - `ObjetoPadrao`
 - `ObjetoPorIndice`
 - `OffsetDoMembro`
+- `OrigemDoSimbolo`
 - `Posicao`
 - `PosicaoParaCoordenadas`
 - `Pronta`
@@ -123,13 +128,11 @@ faz o plugin agir sobre dado inventado.
 
 ### Parciais
 
+- `AcharDinoPorID`
 - `CriarTextoDoJogo`
 - `CriarTextoRicoDoJogo`
+- `DarItem`
 - `EnderecoIP`
-
-### Substituidas (recusam de proposito)
-
-- `DarItem` -> use `DarItemAoJogador`
 
 ### Ainda nao ligadas
 

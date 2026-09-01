@@ -16,7 +16,7 @@ que cada prova não pode afirmar**.
 | constantes de layout da engine | **28 de 28** | offsets reais do dump |
 | bytes de cada desvio | **11 de 11** | `objdump` no exe da build viva |
 | assinaturas de função desviada | **13 de 13** | as 796.225 chaves |
-| funções da tabela | **123 de 123** | o header, uma a uma |
+| funções da tabela | **124 de 124** | o header, uma a uma |
 | nomes que os plugins pedem ao jogo | **48** | o dump + os 7.006 bitfields |
 | nomes nos headers gerados | **32.103** | o dump |
 | retornos de três valores | **41 chamadas** | leitura do código |
@@ -31,7 +31,7 @@ que cada prova não pode afirmar**.
 | `MinApiVersion` x o que se chama | **24 plugins** | o mapa versão→função |
 | os números da documentação | **14 afirmações** | o artefato que produz cada um |
 
-`./ferramentas/calibrar.sh` roda tudo: **425 verdes**.
+`./ferramentas/calibrar.sh` roda tudo: **470 verdes**.
 
 **Cada guarda foi calibrada** — planta-se o defeito que ela deve pegar e exige-se
 a acusação. Uma guarda que nunca acusou nada não é uma guarda; é um enfeite.
@@ -112,6 +112,25 @@ do que a função declara.
 
 ---
 
+## O que ficou fechado em 01/09/2026
+
+**Nenhuma entrada da tabela promete no header e recusa no código.** Era o caso de
+`DarItem`, `MoverItem`, `EOSIDdoJogador`, `AcharJogadorPorEOSID` e
+`RodarComando` — cinco funções que existiam, compilavam, e devolviam zero desde
+o primeiro dia. `conferir-tabela.py` guarda isso agora.
+
+As quatro recusas que sobraram são **condicionais**, e as quatro condições estão
+satisfeitas nesta build: `CriarTextoDoJogo` e `CriarTextoRicoDoJogo` precisam
+das âncoras do alocador e do `FText::FromString`; `EnderecoIP` precisa da
+`EnderecoDeRede`; `DarItem` precisa que `AddNewItem` esteja na reflexão. Todas
+presentes.
+
+E **as três entradas escritas por gente têm prova**: `PluginInfo.json` (quem
+escreve o plugin), `config.json` (o dono do servidor) e a linha de comando (o
+jogador). Nenhuma das três tinha um caso rodado contra ela antes.
+
+---
+
 ## O que cada prova não pode afirmar
 
 Isto não é modéstia; é o limite real de cada instrumento, e ignorá-lo é como não
@@ -184,6 +203,7 @@ Cada uma nasceu de um defeito real, e o cabeçalho de cada ferramenta conta qual
 | `conferir-relocacao` | `[rip+...]` era recusado; recusar custava 13,4% das funções do jogo |
 | `conferir-ancoras` | o jogo atualiza, o RVA cai noutra função, e o desvio arma em silêncio |
 | `conferir-simbolos` | a chave existe no dump e falta na tabela: compila, roda, devolve **nulo** |
+| `conferir-alcance` | o porte perde uma função nativa e ela some **sem erro**: `EnderecoDoSimbolo` devolve nulo e o plugin conclui que ela não está nesta build |
 | `conferir-reentrancia` | `RemoverComandoRcon` de dentro do próprio comando invalida o laço |
 | `conferir-promessas` | `UsesRawOffsets` "transforma silêncio em recusa" — e a recusa nunca existiu |
 | `conferir-retornos` | recusar só protege quem olha a recusa; nulo entregue ao jogo cai dentro do ARK |

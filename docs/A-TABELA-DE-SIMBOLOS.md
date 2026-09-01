@@ -9,6 +9,37 @@
 Sai em `simbolos/simbolos-<build>.txt` e vai junto no pacote do runtime, em
 `Brz-Api/`.
 
+> ### ⚠ ISTO NÃO RODA NA VPS DO ARK
+>
+> O `SOCORRO.md` diz, e o motivo é medido: *«Carregar 2×185 MB no porter empurrou
+> para o swap e o ping foi de 70 para 200 ms.»* O servidor está de pé enquanto
+> este comando roda, e quem paga a lentidão é quem está jogando.
+>
+> **Onde rodar:** no PC (`ssh arkpc`), ou em qualquer máquina que não seja esta.
+>
+> Em 01/09/2026 eu rodei aqui mesmo, por 33 minutos, sem ter lido esta regra.
+> Medindo depois: `RSS 753 MB`, pressão de memória `0.00`, servidor de pé — sem
+> dano aparente. **Isso não absolve nada**: a coisa que a regra protege é o ping,
+> e o ping é justamente o que eu não medi. Não medir e concluir que está tudo bem
+> é o defeito que este projeto inteiro existe para não cometer.
+
+### O que está PENDENTE de medir
+
+A máscara de assinatura passou a andar por instrução, com o decodificador do
+motor, em vez da varredura byte a byte que lia o meio de uma instrução como se
+fosse o começo da próxima (ver `conferir-decodificador.py`, casos 4 e 5).
+
+**O ganho disso na tabela ainda não foi medido**, porque a medição é a rodada
+inteira do porter — e ela não pode acontecer aqui. A tabela em disco continua
+válida e é a de antes da mudança; o código novo entra na próxima regeração, que
+é o dia em que o jogo atualizar. Nesse dia, compare:
+
+| antes | depois |
+|---|---|
+| 128.360 resolvidas (71,55%) | ? |
+| 35.623 «sem par» | ? |
+| 6.982 «assinatura fraca» | ? |
+
 ---
 
 ## Por que existe
