@@ -9,9 +9,9 @@ verdade. As demais **devolvem falha e dizem no log qual sao e qual plugin**
 **pediu** — nunca fingem sucesso, porque motor que devolve zero em silencio
 faz o plugin agir sobre dado inventado.
 
-## 104 de 104 (100%)
+## 106 de 106 (100%)
 
-- **100 ligadas** — fazem o trabalho, sem ressalva
+- **102 ligadas** — fazem o trabalho, sem ressalva
 - **3 parciais** — entregam parte, e o log diz exatamente o que falta (marcadas com `BRZ_PARCIAL` no fonte)
 - **1 substituidas** — recusam DE PROPOSITO, porque nao ha rota por reflexao, e apontam a funcao que faz o servico
 - **0 nao ligadas** — recusam sempre, e dizem por que
@@ -53,6 +53,7 @@ faz o plugin agir sobre dado inventado.
 - `EOSIDdoJogador`
 - `EhReplicado`
 - `EnderecoDaAncora`
+- `EnderecoDoSimbolo`
 - `EscreverBit`
 - `EscreverMembro`
 - `EscreverParm`
@@ -104,6 +105,7 @@ faz o plugin agir sobre dado inventado.
 - `Pronta`
 - `PublicarServico`
 - `QuantidadeDoItem`
+- `QuantosSimbolos`
 - `RemoverAoEntrarJogador`
 - `RemoverAoSairJogador`
 - `RemoverAoTick`

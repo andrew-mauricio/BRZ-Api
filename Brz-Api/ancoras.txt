@@ -31,14 +31,14 @@ NamePool        B0BC740
 # UPrimalInventoryComponent...), mas todas acabam chamando esta. Desviar aqui
 # pega tudo, e desviar UMA funcao em vez de milhares e o que torna o custo
 # aceitavel.
-ProcessEvent    13C68C0
+ProcessEvent    13C68C0   4055565741544155415641574881ec00010000488d6c243048899d2801000048
 
 # O alocador do JOGO. Uma FString entregue ao jogo tem de ter a memoria dele:
 # se ele liberar memoria que NOS alocamos, o heap dele corrompe e a queda vem
 # depois, em lugar nenhum. Sem estas duas, as funcoes que criam texto RECUSAM,
 # de proposito — recusar e melhor que alocar do lado errado.
-FMemoryMalloc   107D8B0
-FMemoryFree     1070810
+FMemoryMalloc   107D8B0   48895c2408574883ec20488bf98bda488b0d1a37030a4885c9750ce8902fffff
+FMemoryFree     1070810   4885c9742e534883ec20488bd9488b0dbc07040a4885c9750ce832000000488b
 
 # ── ancoras NOMEADAS, para o que a reflexao NAO descreve ────────────────────
 #
@@ -60,12 +60,12 @@ FMemoryFree     1070810
 # Faltar uma ancora e um plugin que nao faz UMA coisa. Nao e um servidor que
 # nao sobe.
 
-DanoNoPersonagem      4BF4D80    # APrimalCharacter::TakeDamage
-DanoNoDino            5359420    # APrimalDinoCharacter::TakeDamage
-DanoNaEstrutura       53E4750    # APrimalStructure::TakeDamage
-MorteDoDino           52F1BD0    # APrimalDinoCharacter::Die  (tambem e UFunction)
-MorteDoJogador        4CC6DE0    # AShooterCharacter::Die     (NAO e UFunction)
-MorteDoPersonagem     4BB7630    # APrimalCharacter::Die      (NAO e UFunction)
+DanoNoPersonagem 4BF4D80   4c894c24204c89442418f30f114c241048894c24085553565741544155415641   # APrimalCharacter::TakeDamage
+DanoNoDino      5359420   488bc4488958104889681856574155415641574881ecb00900000f2970c80f29   # APrimalDinoCharacter::TakeDamage
+DanoNaEstrutura 53E4750   488bc44889580848897010488978184c894820554154415541564157488da8e8   # APrimalStructure::TakeDamage
+MorteDoDino     52F1BD0   488bc4555356574154415541564157488da8d8fdffff4881ece80200000f2970   # APrimalDinoCharacter::Die (tambem e UFunction)
+MorteDoJogador  4CC6DE0   48895c241048896c2418565741564883ec40488bd90f29742430488b89c00400   # AShooterCharacter::Die (NAO e UFunction)
+MorteDoPersonagem 4BB7630   488bc4555356574154415541564157488da818faffff4881eca80600000f2970   # APrimalCharacter::Die (NAO e UFunction)
 
 # APlayerController::GetPlayerNetworkAddress — o endereco de rede do jogador.
 # Nao tem `exec`, logo nao e UFunction, logo a reflexao nao a descreve.
@@ -78,7 +78,7 @@ MorteDoPersonagem     4BB7630    # APrimalCharacter::Die      (NAO e UFunction)
 # byte 64 da funcao, com o tamanho da funcao conferindo). NAO foi conferida
 # dentro do jogo rodando — ate isso acontecer, e' um numero medido, nao um fato
 # observado. A guarda de "aponta para codigo executavel" vale de qualquer jeito.
-EnderecoDeRede        36959E0    # APlayerController::GetPlayerNetworkAddress
+EnderecoDeRede  36959E0   48895c24084889742410574883ec20488db940050000488bda488b374885f60f   # APlayerController::GetPlayerNetworkAddress
 
 # ── o RCON ─────────────────────────────────────────────────────────────────
 #
@@ -92,8 +92,8 @@ EnderecoDeRede        36959E0    # APlayerController::GetPlayerNetworkAddress
 # O layout do pacote (Length 0x0 · Id 0x4 · Type 0x8 · Body 0x10) veio da build
 # de referencia, e por isso e CONFERIDO no primeiro pacote antes de valer: tipo
 # do protocolo e corpo imprimivel. Nao conferindo, o despacho se desliga.
-TratadorRcon          5374F90    # RCONClientConnection::ProcessRCONPacket
-RespostaRcon          5375150    # RCONClientConnection::SendMessage
+TratadorRcon    5374F90   48895c241048896c2418565741564883ec70488bf2488bd933ff48897c242048   # RCONClientConnection::ProcessRCONPacket
+RespostaRcon    5375150   40555356574156488d6c24c94881ec00010000488b051603c9054833c4488945   # RCONClientConnection::SendMessage
 
 # FText::FromString(const FString&) — quem MONTA o FText e' a engine.
 #
@@ -103,7 +103,7 @@ RespostaRcon          5375150    # RCONClientConnection::SendMessage
 #
 # Estatica que devolve struct grande: no x64 da Microsoft, o lugar do resultado
 # vai em RCX e o argumento em RDX.
-TextoDeString         10AE710    # FText::FromString(FString&)
+TextoDeString   10AE710   4056574883ec4848637208488bf948895c246848896c247033ed4c8974244089   # FText::FromString(FString&)
 
 # AShooterPlayerController::ConsoleCommand(FString&, bool)
 #
@@ -114,7 +114,7 @@ TextoDeString         10AE710    # FText::FromString(FString&)
 #
 # Devolve FString POR VALOR: this em RCX, lugar do resultado em RDX, a FString
 # do comando em R8 e o bool em R9.
-ComandoDeConsole      4EA7310    # AShooterPlayerController::ConsoleCommand
+ComandoDeConsole 4EA7310   488bc44889581848897020488950105557415441564157488d68a14881ec0001   # AShooterPlayerController::ConsoleCommand
 
 # ── o RELOGIO, e por que ele nao pode vir do ProcessEvent ──────────────────
 #
@@ -128,7 +128,7 @@ ComandoDeConsole      4EA7310    # AShooterPlayerController::ConsoleCommand
 # batimento rodava no talo, dentro da propria thread que devia estar carregando
 # o mundo. E a lista "por tique" disparava toda vez que o MILISSEGUNDO mudava:
 # ate 1000 Hz, contra os ~30 Hz de um quadro.
-UWorldTick            3467940    # UWorld::Tick(ELevelTick, float)
+UWorldTick      3467940   488bc4488958205556574154415541564157488d6c24b04881ec500100000f29   # UWorld::Tick(ELevelTick, float)
 
 # AShooterPlayerController::ServerSendChatMessage_Implementation
 #
@@ -136,4 +136,4 @@ UWorldTick            3467940    # UWorld::Tick(ELevelTick, float)
 # desviar o ProcessEvent inteiro — o despachante universal, que passa em TODA
 # chamada de funcao do jogo. A AsaApi desvia esta funcao aqui, direto: uma
 # chamada que nao seja esta custa ZERO, porque nao ha despachante nenhum.
-ChatDoJogador         4EF6DF0    # AShooterPlayerController::ServerSendChatMessage_Implementation
+ChatDoJogador   4EF6DF0   488bc44889580844894820448940185556574154415541564157488da828feff   # AShooterPlayerController::ServerSendChatMessage_Implementation

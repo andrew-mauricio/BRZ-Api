@@ -63,7 +63,7 @@ cabeçalho diz quantos ficaram de fora e por quê:
 
 ```
 funcoes no dump ........ 179400
-RESOLVIDAS ............. 77426 (43.16%)
+RESOLVIDAS ............. 128360 (43.16%)
   nao moveram ..........   756
   casadas por assinatura 76670
 fora, e o motivo:
