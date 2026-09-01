@@ -12,19 +12,26 @@ No PDB. No offset table. No third-party CDN. It asks the running game.
 
 ---
 
-## Install — three steps
+## Install — two steps
 
-1. Put **`winmm.dll`** next to `ArkAscendedServer.exe`, in
-   `ShooterGame\Binaries\Win64\`.
-2. Copy the **`Brz-Api\`** folder from this package next to it too. It carries
-   `ancoras.txt` — 18 addresses, and the only file that is specific to a
-   game build. **Without it the API loads, refuses to initialise, and no plugin
-   runs** — on purpose: reading the wrong memory quietly is worse than not
-   loading.
-3. Rename the **original** `winmm.dll` of that folder to **`winmm_orig.dll`**.
-   (On Windows there is none there — copy it from `C:\Windows\System32\`.)
+1. Drop **`winmm.dll`** and the **`Brz-Api\`** folder into
+   `ShooterGame\Binaries\Win64\`, next to `ArkAscendedServer.exe`.
+2. Start the server.
 
-Start the server. `Brz-Api\Logs\BrzApi.log` appears, and an empty `Plugins\`.
+That is the whole thing. `Brz-Api\Logs\BrzApi.log` appears, along with an empty
+`Plugins\` for you to drop plugins into.
+
+`Brz-Api\` carries `ancoras.txt` — 18 addresses, and the only file that is
+specific to a game build. **Without it the API loads, refuses to initialise, and
+no plugin runs** — on purpose: reading the wrong memory quietly is worse than not
+loading.
+
+**There is nothing to rename.** The API enters through `winmm`, so it needs the
+real `winmm.dll` under the name `winmm_orig.dll` — and it copies that from
+`System32` itself, on first start, checking first that what it is copying is not
+another copy of itself. Until 01/09/2026 that was a third step, done by hand, and
+getting it wrong broke the server's audio with a log line that did not say
+where.
 
 **The game updated?** Only `ancoras.txt` changes — the API does not recompile,
 and neither do your plugins. The file names the build it was measured for, and
@@ -115,17 +122,25 @@ The SDK — the header and the examples, everything you actually touch — is
 Sem PDB, sem tabela de offsets, sem CDN de terceiro. Ela pergunta ao jogo
 rodando.
 
-## Instalar — três passos
+## Instalar — dois passos
 
-1. Ponha o **`winmm.dll`** ao lado do `ArkAscendedServer.exe`, em
-   `ShooterGame\Binaries\Win64\`.
-2. Copie a pasta **`Brz-Api\`** deste pacote para lá também. Ela traz o
-   `ancoras.txt` — 18 endereços, e o único arquivo que é específico de uma
-   build do jogo. **Sem ele a API carrega, recusa iniciar e nenhum plugin
-   roda** — de propósito: ler memória errada calado é pior que não carregar.
-3. Renomeie a `winmm.dll` **original** daquela pasta para **`winmm_orig.dll`**.
+1. Jogue o **`winmm.dll`** e a pasta **`Brz-Api\`** dentro de
+   `ShooterGame\Binaries\Win64\`, ao lado do `ArkAscendedServer.exe`.
+2. Suba o servidor.
 
-Suba o servidor. Aparece `Brz-Api\Logs\BrzApi.log` e um `Plugins\` vazio.
+É isso. Aparece o `Brz-Api\Logs\BrzApi.log` e um `Plugins\` vazio, que é onde
+você joga os plugins.
+
+A pasta `Brz-Api\` traz o `ancoras.txt` — 18 endereços, e o único arquivo que é
+específico de uma build do jogo. **Sem ele a API carrega, recusa iniciar e nenhum
+plugin roda** — de propósito: ler memória errada calado é pior que não carregar.
+
+**Não há nada para renomear.** A API entra pela `winmm`, então ela precisa da
+`winmm.dll` de verdade sob o nome `winmm_orig.dll` — e ela mesma copia essa do
+`System32` no primeiro arranque, conferindo antes que o que está copiando não é
+outra cópia dela própria. Até 01/09/2026 isso era um terceiro passo, feito à mão,
+e errar nele quebrava o áudio do servidor com uma linha de log que não dizia
+onde.
 
 **Sob Wine**, é preciso mandar preferir a nossa: `WINEDLLOVERRIDES=winmm=n,b`.
 
