@@ -17,7 +17,7 @@ No PDB. No offset table. No third-party CDN. It asks the running game.
 1. Put **`winmm.dll`** next to `ArkAscendedServer.exe`, in
    `ShooterGame\Binaries\Win64\`.
 2. Copy the **`Brz-Api\`** folder from this package next to it too. It carries
-   `ancoras.txt` — thirteen addresses, and the only file that is specific to a
+   `ancoras.txt` — 18 addresses, and the only file that is specific to a
    game build. **Without it the API loads, refuses to initialise, and no plugin
    runs** — on purpose: reading the wrong memory quietly is worse than not
    loading.
@@ -120,7 +120,7 @@ rodando.
 1. Ponha o **`winmm.dll`** ao lado do `ArkAscendedServer.exe`, em
    `ShooterGame\Binaries\Win64\`.
 2. Copie a pasta **`Brz-Api\`** deste pacote para lá também. Ela traz o
-   `ancoras.txt` — treze endereços, e o único arquivo que é específico de uma
+   `ancoras.txt` — 18 endereços, e o único arquivo que é específico de uma
    build do jogo. **Sem ele a API carrega, recusa iniciar e nenhum plugin
    roda** — de propósito: ler memória errada calado é pior que não carregar.
 3. Renomeie a `winmm.dll` **original** daquela pasta para **`winmm_orig.dll`**.
